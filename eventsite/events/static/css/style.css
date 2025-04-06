@@ -1,0 +1,185 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5; /* Светлый фон */
+    color: #333; /* Темный текст для читаемости */
+}
+
+.hero-section {
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.events-section {
+    position: relative;
+    background-color: #f5f5f5; /* Светлый фон для секции */
+}
+
+.event-card {
+    background: transparent;
+    border-bottom: 1px solid #e0e0e0; /* Светлая граница */
+    padding-bottom: 15px;
+}
+
+.event-left {
+    min-width: 150px;
+}
+
+.event-date h3 {
+    font-size: 3.5rem; /* Увеличиваем шрифт даты */
+    font-weight: bold;
+    color: #005daa; /* Ключевой цвет для даты */
+}
+
+.event-date p {
+    font-size: 1.2rem; /* Увеличиваем шрифт текста */
+}
+
+.event-center h4 {
+    font-size: 2rem; /* Увеличиваем шрифт названия */
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333; /* Темный текст */
+}
+
+.event-center p {
+    font-size: 1.5rem; /* Увеличиваем шрифт описания */
+    color: #333;
+}
+
+.event-right h5 {
+    font-size: 1.75rem; /* Увеличиваем шрифт локации */
+    font-weight: bold;
+    color: #333;
+}
+
+.event-right p {
+    font-size: 1.2rem; /* Увеличиваем шрифт адреса и уточнения */
+    color: #6c757d;
+}
+
+.event-button .btn {
+    border-color: #005daa; /* Ключевой цвет для кнопки */
+    color: #005daa;
+    font-weight: bold;
+    font-size: 1.2rem; /* Увеличиваем шрифт кнопки */
+}
+
+.event-button .btn:hover {
+    background-color: #005daa;
+    color: #ffffff;
+}
+
+footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    background-color: #e9ecef !important; /* Светлый фон футера */
+    color: #333 !important; /* Темный текст футера */
+}
+
+/* Стили для навигации */
+.custom-navbar {
+    background-color: #ffffff !important; /* Светлый фон навигации */
+    border-bottom: 1px solid #e0e0e0; /* Светлая граница */
+}
+
+.navbar-logo {
+    height: 40px;
+    margin-right: 10px;
+}
+
+.navbar-nav .nav-link {
+    color: #333 !important; /* Темный текст ссылок */
+    font-size: 16px;
+    margin: 0 15px;
+    transition: color 0.3s;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #005daa !important; /* Ключевой цвет при наведении */
+}
+
+.btn-outline-primary {
+    border-color: #005daa !important; /* Ключевой цвет для кнопки */
+    color: #005daa !important;
+}
+
+.btn-outline-primary:hover {
+    background-color: #005daa !important;
+    border-color: #005daa !important;
+    color: #ffffff !important;
+}
+
+.btn-primary {
+    background-color: #005daa !important;
+    border-color: #005daa !important;
+}
+
+.btn-primary:hover {
+    background-color: #004a8c !important;
+    border-color: #004a8c !important;
+}
+
+/* Адаптивность */
+@media (max-width: 767px) {
+    .hero-section {
+        padding: 50px 0;
+    }
+
+    .hero-section h1 {
+        font-size: 2rem;
+    }
+
+    .hero-section p {
+        font-size: 1rem;
+    }
+
+    .event-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .event-right {
+        text-align: left !important;
+    }
+
+    .navbar-nav {
+        text-align: center;
+    }
+
+    .navbar-nav .nav-link {
+        margin: 5px 0;
+    }
+
+    .btn-outline-primary {
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 576px) {
+    .event-date h3 {
+        font-size: 2.5rem; /* Уменьшаем для маленьких экранов */
+    }
+
+    .event-center h4 {
+        font-size: 1.5rem;
+    }
+
+    .event-center p {
+        font-size: 1.2rem;
+    }
+
+    .event-right h5 {
+        font-size: 1.25rem;
+    }
+
+    .event-right p {
+        font-size: 1rem;
+    }
+
+    .event-button .btn {
+        font-size: 1rem;
+    }
+}

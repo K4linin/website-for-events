@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}Главная{% endblock %}
+{% block content %}
+    <!-- Геро-секция -->
+    <section class="hero-section text-center text-dark" style="background: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)), url('https://via.placeholder.com/1920x600'); background-size: cover; padding: 100px 0;">
+        <div class="container">
+            <h1 class="display-4">Добро пожаловать на EventSite!</h1>
+            <p class="lead">Самые яркие события ждут вас.</p>
+            <a href="{% url 'events_list' %}" class="btn btn-primary btn-lg">Смотреть мероприятия</a>
+        </div>
+    </section>
+
+    <!-- Анонс мероприятий -->
+    <section class="events-section container-fluid py-5 bg-light">
+        <div class="container">
+            <h2 class="text-dark mb-5">Мероприятия:</h2>
+            <div class="row">
+                {% for event in events %}
+                    <div class="col-12 mb-4">
+                        <div class="event-card d-flex flex-column flex-md-row">
+                            <!-- Левая часть -->
+                            <div class="event-left me-md-4 mb-3 mb-md-0">
+                                <!-- Дата -->
+                                <div class="event-date mb-3">
+                                    <p class="text-muted small mb-0">Дата</p>
+                                    <h3 class="text-primary">{{ event.date|date:"d.m" }}</h3>
+                                    <p class="text-primary mb-0">{{ event.start_time|time:"H:i" }}–{{ event.end_time|time:"H:i" }}</p>
+                                </div>
+                                <!-- Кнопка -->
+                                <div class="event-button">
+                                    <a href="{% url 'events_list' %}" class="btn btn-outline-primary">Подробнее</a>
+                                </div>
+                            </div>
+                            <!-- Центральная часть -->
+                            <div class="event-center flex-grow-1 mb-3 mb-md-0">
+                                <h4 class="text-dark mb-1">{{ event.title }}</h4>
+                                <p class="text-dark mb-0">{{ event.description|truncatewords:5 }}</p>
+                            </div>
+                            <!-- Правая часть -->
+                            <div class="event-right text-md-end">
+                                <p class="text-muted small mb-0">Локация</p>
+                                <h5 class="text-dark mb-3">{{ event.location }}</h5>
+                                <p class="text-muted small mb-0">{{ event.address }}</p>
+                                <p class="text-muted small mb-0">{{ event.location_details }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p class="text-center text-dark">Мероприятий пока нет.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}
