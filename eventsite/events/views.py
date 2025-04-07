@@ -61,3 +61,10 @@ def contact(request):
 def news_detail(request, news_id):
     news_item = get_object_or_404(News, id=news_id)
     return render(request, 'events/news_detail.html', {'news': news_item})
+
+def news_list(request):
+    news = News.objects.all().order_by('-publication_date')
+    paginator = Paginator(news, 6)  # 6 новостей на страницу
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'events/news_list.html', {'page_obj': page_obj})

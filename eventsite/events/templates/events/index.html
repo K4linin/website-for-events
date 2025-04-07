@@ -6,36 +6,35 @@
         <div class="container">
             <h1 class="display-3 animate__animated animate__fadeIn">Добро пожаловать на EventSite!</h1>
             <p class="lead animate__animated animate__fadeIn animate__delay-1s">Самые яркие события ждут вас.</p>
-            <a href="#events" class="btn btn-primary btn-lg animate__animated animate__fadeIn animate__delay-2s">Смотреть мероприятия</a>
         </div>
-    </section>
-
-    <!-- Фильтры и поиск -->
-    <section class="filters-section container py-4 animate__animated animate__fadeIn">
-        <form method="get" class="row g-3">
-            <!-- Поиск -->
-            <div class="col-md-4">
-                <input type="text" name="search" class="form-control" placeholder="Поиск мероприятий..." value="{{ search_query|default_if_none:'' }}">
-            </div>
-            <!-- Фильтр по дате -->
-            <div class="col-md-3">
-                <input type="date" name="date" class="form-control" value="{{ date_filter|default_if_none:'' }}">
-            </div>
-            <!-- Фильтр по локации -->
-            <div class="col-md-3">
-                <input type="text" name="location" class="form-control" placeholder="Локация" value="{{ location_filter|default_if_none:'' }}">
-            </div>
-            <!-- Кнопка -->
-            <div class="col-md-2">
-                <button type="submit" class="btn btn-primary w-100">Фильтровать</button>
-            </div>
-        </form>
     </section>
 
     <!-- Анонс мероприятий -->
     <section id="events" class="events-section container-fluid py-5 bg-light">
         <div class="container">
             <h2 class="text-dark mb-5 text-center">Мероприятия</h2>
+            <!-- Фильтры и поиск -->
+            <section class="filters-section py-4 animate__animated animate__fadeIn">
+                <form method="get" class="row g-3">
+                    <!-- Поиск -->
+                    <div class="col-md-4">
+                        <input type="text" name="search" class="form-control" placeholder="Поиск мероприятий..." value="{{ search_query|default_if_none:'' }}">
+                    </div>
+                    <!-- Фильтр по дате -->
+                    <div class="col-md-3">
+                        <input type="date" name="date" class="form-control" value="{{ date_filter|default_if_none:'' }}">
+                    </div>
+                    <!-- Фильтр по локации -->
+                    <div class="col-md-3">
+                        <input type="text" name="location" class="form-control" placeholder="Локация" value="{{ location_filter|default_if_none:'' }}">
+                    </div>
+                    <!-- Кнопка -->
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary w-100">Фильтровать</button>
+                    </div>
+                </form>
+            </section>
+
             <div class="row">
                 {% for event in page_obj %}
                     <div class="col-12 mb-4 animate__animated animate__fadeInUp">
@@ -105,6 +104,48 @@
         </div>
     </section>
 
+        <!-- Секция "Новости" -->
+    <section class="news-section container-fluid py-5 bg-light animate__animated animate__fadeIn">
+        <div class="container">
+            <h2 class="text-dark mb-5 text-center">Новости</h2>
+            <div class="row">
+                {% for news_item in news %}
+                    <div class="col-md-4 mb-4">
+                        <a href="{% url 'news_detail' news_item.id %}" class="text-decoration-none">
+                            <div class="news-card">
+                                <img src="{{ news_item.image.url }}" alt="{{ news_item.title }}" class="img-fluid rounded">
+                                <h5 class="text-dark mt-3">{{ news_item.title }}</h5>
+                                <p class="text-muted small">{{ news_item.publication_date|date:"d.m.Y" }}</p>
+                            </div>
+                        </a>
+                    </div>
+                {% empty %}
+                    <p class="text-center text-dark">Новостей пока нет.</p>
+                {% endfor %}
+            </div>
+            <!-- Кнопка "Посмотреть все новости" -->
+            <div class="text-center mt-4">
+                <a href="{% url 'news_list' %}" class="btn btn-primary">Посмотреть все новости</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Секция "Партнеры" -->
+    <section class="partners-section container-fluid py-5 bg-white animate__animated animate__fadeIn">
+        <div class="container text-center">
+            <h2 class="text-dark mb-5">Партнеры</h2>
+            <div class="row">
+                {% for partner in partners %}
+                    <div class="col-md-3 col-6 mb-4">
+                        <img src="{{ partner.logo.url }}" alt="{{ partner.name }}" class="img-fluid partner-logo">
+                    </div>
+                {% empty %}
+                    <p class="text-dark">Партнеры пока не добавлены.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
     <!-- Секция FAQ -->
     <section class="faq-section container py-5 animate__animated animate__fadeIn">
         <div class="container">
@@ -150,7 +191,7 @@
         </div>
     </section>
 
-    <!-- Секция с видеоплеером -->
+        <!-- Секция с видеоплеером -->
     <section class="video-section container-fluid py-5 bg-white animate__animated animate__fadeIn">
         <div class="container">
             <h2 class="text-dark mb-5 text-center">Видео с мероприятий</h2>
@@ -183,58 +224,6 @@
             {% else %}
                 <p class="text-center text-dark">Видео пока не добавлены.</p>
             {% endif %}
-        </div>
-    </section>
-
-    <!-- Секция "Новости" -->
-    <section class="news-section container-fluid py-5 bg-light animate__animated animate__fadeIn">
-        <div class="container">
-            <h2 class="text-dark mb-5 text-center">Новости</h2>
-            <div class="row">
-                {% for news_item in news %}
-                    <div class="col-md-4 mb-4">
-                        <a href="{% url 'news_detail' news_item.id %}" class="text-decoration-none">
-                            <div class="news-card">
-                                <img src="{{ news_item.image.url }}" alt="{{ news_item.title }}" class="img-fluid rounded">
-                                <h5 class="text-dark mt-3">{{ news_item.title }}</h5>
-                                <p class="text-muted small">{{ news_item.publication_date|date:"d.m.Y" }}</p>
-                            </div>
-                        </a>
-                    </div>
-                {% empty %}
-                    <p class="text-center text-dark">Новостей пока нет.</p>
-                {% endfor %}
-            </div>
-        </div>
-    </section>
-
-    <!-- Секция "Партнеры" -->
-    <section class="partners-section container-fluid py-5 bg-white animate__animated animate__fadeIn">
-        <div class="container text-center">
-            <h2 class="text-dark mb-5">Партнеры</h2>
-            <div class="row">
-                {% for partner in partners %}
-                    <div class="col-md-3 col-6 mb-4">
-                        <img src="{{ partner.logo.url }}" alt="{{ partner.name }}" class="img-fluid partner-logo">
-                    </div>
-                {% empty %}
-                    <p class="text-dark">Партнеры пока не добавлены.</p>
-                {% endfor %}
-            </div>
-        </div>
-    </section>
-
-    <!-- Секция "О нас" -->
-    <section class="about-section container py-5 animate__animated animate__fadeIn">
-        <div class="row align-items-center">
-            <div class="col-md-6">
-                <h2 class="text-dark mb-4">О нас</h2>
-                <p class="text-dark">EventSite — это платформа для поиска и организации мероприятий. Мы помогаем вам находить интересные события, от конференций до воркшопов, и делиться своими идеями с другими.</p>
-                <a href="{% url 'contact' %}" class="btn btn-outline-primary">Узнать больше</a>
-            </div>
-            <div class="col-md-6">
-                <img src="https://via.placeholder.com/500x300" alt="О нас" class="img-fluid rounded shadow">
-            </div>
         </div>
     </section>
 {% endblock %}

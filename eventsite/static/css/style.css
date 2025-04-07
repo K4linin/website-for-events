@@ -38,9 +38,8 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     padding: 25px;
-    margin-bottom: 40px;
+    margin-bottom: 40px; 
 }
-
 .filters-section .form-control {
     border-radius: 8px;
     border: 1px solid #ced4da;
