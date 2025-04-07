@@ -1,25 +1,68 @@
+/* Подключаем анимации */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css');
+
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f5f5f5; /* Светлый фон */
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f9fa; /* Светлый фон */
     color: #333; /* Темный текст для читаемости */
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    color: #333;
 }
 
 .hero-section {
-    min-height: 400px;
+    min-height: 600px;
+    background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url('https://via.placeholder.com/1920x600') center/cover no-repeat;
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
+    padding: 120px 0;
+}
+
+.hero-section h1 {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+}
+
+.hero-section p {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+}
+
+.filters-section {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    margin-bottom: 40px;
+}
+
+.filters-section .form-control {
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    padding: 10px;
 }
 
 .events-section {
-    position: relative;
-    background-color: #f5f5f5; /* Светлый фон для секции */
+    background-color: #f8f9fa;
+    padding: 80px 0;
 }
 
 .event-card {
-    background: transparent;
-    border-bottom: 1px solid #e0e0e0; /* Светлая граница */
-    padding-bottom: 15px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.event-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 .event-left {
@@ -27,43 +70,46 @@ body {
 }
 
 .event-date h3 {
-    font-size: 3.5rem; /* Увеличиваем шрифт даты */
-    font-weight: bold;
+    font-size: 3.5rem;
+    font-weight: 700;
     color: #005daa; /* Ключевой цвет для даты */
 }
 
 .event-date p {
-    font-size: 1.2rem; /* Увеличиваем шрифт текста */
+    font-size: 1.2rem;
 }
 
 .event-center h4 {
-    font-size: 2rem; /* Увеличиваем шрифт названия */
-    font-weight: bold;
+    font-size: 2rem;
+    font-weight: 700;
     margin-bottom: 10px;
-    color: #333; /* Темный текст */
+    color: #333;
 }
 
 .event-center p {
-    font-size: 1.5rem; /* Увеличиваем шрифт описания */
+    font-size: 1.5rem;
     color: #333;
 }
 
 .event-right h5 {
-    font-size: 1.75rem; /* Увеличиваем шрифт локации */
-    font-weight: bold;
+    font-size: 1.75rem;
+    font-weight: 700;
     color: #333;
 }
 
 .event-right p {
-    font-size: 1.2rem; /* Увеличиваем шрифт адреса и уточнения */
+    font-size: 1.2rem;
     color: #6c757d;
 }
 
 .event-button .btn {
-    border-color: #005daa; /* Ключевой цвет для кнопки */
+    border-color: #005daa;
     color: #005daa;
-    font-weight: bold;
-    font-size: 1.2rem; /* Увеличиваем шрифт кнопки */
+    font-weight: 500;
+    font-size: 1.2rem;
+    border-radius: 8px;
+    padding: 10px 20px;
+    transition: all 0.3s ease;
 }
 
 .event-button .btn:hover {
@@ -71,18 +117,168 @@ body {
     color: #ffffff;
 }
 
-footer {
-    position: relative;
-    bottom: 0;
+.events-text-section {
+    background-color: #ffffff;
+    padding: 60px 0;
+}
+
+.events-text-section h2 {
+    font-size: 2.5rem;
+}
+
+.events-text-section p {
+    font-size: 1.2rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.faq-section {
+    background-color: #ffffff;
+    padding: 80px 0;
+}
+
+.faq-section .accordion-item {
+    border: none;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.faq-section .accordion-button {
+    background-color: #ffffff;
+    color: #333;
+    font-weight: 500;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.faq-section .accordion-button:not(.collapsed) {
+    background-color: #e9ecef;
+    color: #005daa;
+}
+
+.faq-section .accordion-body {
+    padding: 20px;
+    font-size: 1.1rem;
+}
+
+.video-section {
+    background-color: #f8f9fa;
+    padding: 80px 0;
+}
+
+.video-player video {
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-height: 400px;
     width: 100%;
-    background-color: #e9ecef !important; /* Светлый фон футера */
-    color: #333 !important; /* Темный текст футера */
+}
+
+.video-list {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.video-list .list-group-item {
+    border: none;
+    padding: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.video-list .list-group-item:hover {
+    background-color: #e9ecef;
+}
+
+.video-list .list-group-item.active {
+    background-color: #005daa;
+    color: #ffffff;
+    font-weight: 500;
+}
+
+.news-section {
+    background-color: #f8f9fa;
+    padding: 80px 0;
+}
+
+.news-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.news-card img {
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-height: 200px;
+    object-fit: cover;
+    width: 100%;
+}
+
+.news-card h5 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.news-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.news-detail-section {
+    background-color: #ffffff;
+    padding: 80px 0;
+}
+
+.news-detail-section img {
+    max-height: 400px;
+    object-fit: cover;
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.partners-section {
+    background-color: #f8f9fa;
+    padding: 80px 0;
+}
+
+.partner-logo {
+    max-height: 80px;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.partner-logo:hover {
+    transform: scale(1.1);
+}
+
+.about-section {
+    background-color: #ffffff;
+    padding: 80px 0;
+}
+
+.about-section img {
+    max-width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+    background-color: #f8f9fa !important;
+    color: #333 !important;
+    padding: 40px 0;
+    font-size: 1rem;
 }
 
 /* Стили для навигации */
 .custom-navbar {
-    background-color: #ffffff !important; /* Светлый фон навигации */
-    border-bottom: 1px solid #e0e0e0; /* Светлая граница */
+    background-color: #ffffff !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 15px 0;
 }
 
 .navbar-logo {
@@ -91,19 +287,24 @@ footer {
 }
 
 .navbar-nav .nav-link {
-    color: #333 !important; /* Темный текст ссылок */
-    font-size: 16px;
-    margin: 0 15px;
-    transition: color 0.3s;
+    color: #333 !important;
+    font-size: 1.1rem;
+    margin: 0 20px;
+    font-weight: 500;
+    transition: color 0.3s ease;
 }
 
 .navbar-nav .nav-link:hover {
-    color: #005daa !important; /* Ключевой цвет при наведении */
+    color: #005daa !important;
 }
 
 .btn-outline-primary {
-    border-color: #005daa !important; /* Ключевой цвет для кнопки */
+    border-color: #005daa !important;
     color: #005daa !important;
+    font-weight: 500;
+    border-radius: 8px;
+    padding: 10px 20px;
+    transition: all 0.3s ease;
 }
 
 .btn-outline-primary:hover {
@@ -115,6 +316,10 @@ footer {
 .btn-primary {
     background-color: #005daa !important;
     border-color: #005daa !important;
+    border-radius: 8px;
+    padding: 12px 30px;
+    font-weight: 500;
+    transition: all 0.3s ease;
 }
 
 .btn-primary:hover {
@@ -122,18 +327,31 @@ footer {
     border-color: #004a8c !important;
 }
 
+/* Пагинация */
+.page-link {
+    color: #005daa;
+    border-radius: 8px;
+    margin: 0 5px;
+}
+
+.page-item.active .page-link {
+    background-color: #005daa;
+    border-color: #005daa;
+}
+
 /* Адаптивность */
 @media (max-width: 767px) {
     .hero-section {
-        padding: 50px 0;
+        min-height: 400px;
+        padding: 80px 0;
     }
 
     .hero-section h1 {
-        font-size: 2rem;
+        font-size: 2.5rem;
     }
 
     .hero-section p {
-        font-size: 1rem;
+        font-size: 1.2rem;
     }
 
     .event-card {
@@ -150,17 +368,22 @@ footer {
     }
 
     .navbar-nav .nav-link {
-        margin: 5px 0;
+        margin: 10px 0;
     }
 
     .btn-outline-primary {
         margin-top: 10px;
     }
+
+    .video-list {
+        margin-top: 20px;
+        max-height: 300px;
+    }
 }
 
 @media (max-width: 576px) {
     .event-date h3 {
-        font-size: 2.5rem; /* Уменьшаем для маленьких экранов */
+        font-size: 2.5rem;
     }
 
     .event-center h4 {

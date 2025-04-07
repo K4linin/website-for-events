@@ -2,21 +2,43 @@
 {% block title %}Главная{% endblock %}
 {% block content %}
     <!-- Геро-секция -->
-    <section class="hero-section text-center text-dark" style="background: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)), url('https://via.placeholder.com/1920x600'); background-size: cover; padding: 100px 0;">
+    <section class="hero-section text-center text-dark">
         <div class="container">
-            <h1 class="display-4">Добро пожаловать на EventSite!</h1>
-            <p class="lead">Самые яркие события ждут вас.</p>
-            <a href="{% url 'events_list' %}" class="btn btn-primary btn-lg">Смотреть мероприятия</a>
+            <h1 class="display-3 animate__animated animate__fadeIn">Добро пожаловать на EventSite!</h1>
+            <p class="lead animate__animated animate__fadeIn animate__delay-1s">Самые яркие события ждут вас.</p>
+            <a href="#events" class="btn btn-primary btn-lg animate__animated animate__fadeIn animate__delay-2s">Смотреть мероприятия</a>
         </div>
     </section>
 
+    <!-- Фильтры и поиск -->
+    <section class="filters-section container py-4 animate__animated animate__fadeIn">
+        <form method="get" class="row g-3">
+            <!-- Поиск -->
+            <div class="col-md-4">
+                <input type="text" name="search" class="form-control" placeholder="Поиск мероприятий..." value="{{ search_query|default_if_none:'' }}">
+            </div>
+            <!-- Фильтр по дате -->
+            <div class="col-md-3">
+                <input type="date" name="date" class="form-control" value="{{ date_filter|default_if_none:'' }}">
+            </div>
+            <!-- Фильтр по локации -->
+            <div class="col-md-3">
+                <input type="text" name="location" class="form-control" placeholder="Локация" value="{{ location_filter|default_if_none:'' }}">
+            </div>
+            <!-- Кнопка -->
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary w-100">Фильтровать</button>
+            </div>
+        </form>
+    </section>
+
     <!-- Анонс мероприятий -->
-    <section class="events-section container-fluid py-5 bg-light">
+    <section id="events" class="events-section container-fluid py-5 bg-light">
         <div class="container">
-            <h2 class="text-dark mb-5">Мероприятия:</h2>
+            <h2 class="text-dark mb-5 text-center">Мероприятия</h2>
             <div class="row">
-                {% for event in events %}
-                    <div class="col-12 mb-4">
+                {% for event in page_obj %}
+                    <div class="col-12 mb-4 animate__animated animate__fadeInUp">
                         <div class="event-card d-flex flex-column flex-md-row">
                             <!-- Левая часть -->
                             <div class="event-left me-md-4 mb-3 mb-md-0">
@@ -48,6 +70,170 @@
                 {% empty %}
                     <p class="text-center text-dark">Мероприятий пока нет.</p>
                 {% endfor %}
+            </div>
+
+            <!-- Пагинация -->
+            {% if page_obj.has_other_pages %}
+                <nav aria-label="Page navigation" class="mt-4">
+                    <ul class="pagination justify-content-center">
+                        {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if date_filter %}&date={{ date_filter }}{% endif %}{% if location_filter %}&location={{ location_filter }}{% endif %}">« Назад</a>
+                            </li>
+                        {% endif %}
+                        {% for num in page_obj.paginator.page_range %}
+                            <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                                <a class="page-link" href="?page={{ num }}{% if search_query %}&search={{ search_query }}{% endif %}{% if date_filter %}&date={{ date_filter }}{% endif %}{% if location_filter %}&location={{ location_filter }}{% endif %}">{{ num }}</a>
+                            </li>
+                        {% endfor %}
+                        {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if date_filter %}&date={{ date_filter }}{% endif %}{% if location_filter %}&location={{ location_filter }}{% endif %}">Вперед »</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- Текст под мероприятиями -->
+    <section class="events-text-section container py-5 animate__animated animate__fadeIn">
+        <div class="text-center">
+            <h2 class="text-dark mb-4">Присоединяйтесь к нашим мероприятиям!</h2>
+            <p class="text-dark">Мы организуем события для всех, кто хочет учиться, делиться опытом и находить единомышленников. Следите за обновлениями и не пропустите интересные мероприятия!</p>
+        </div>
+    </section>
+
+    <!-- Секция FAQ -->
+    <section class="faq-section container py-5 animate__animated animate__fadeIn">
+        <div class="container">
+            <h2 class="text-dark mb-5 text-center">Часто задаваемые вопросы</h2>
+            <div class="accordion" id="faqAccordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Как зарегистрироваться на мероприятие?
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Чтобы зарегистрироваться, выберите мероприятие, нажмите "Подробнее" и заполните форму регистрации.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Сколько стоит участие?
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Стоимость участия зависит от мероприятия. Некоторые события бесплатные, другие могут требовать оплаты. Подробности указаны в описании мероприятия.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            Как связаться с организаторами?
+                        </button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Вы можете связаться с нами через страницу "Контакты" или написать на email: info@eventsite.com.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Секция с видеоплеером -->
+    <section class="video-section container-fluid py-5 bg-white animate__animated animate__fadeIn">
+        <div class="container">
+            <h2 class="text-dark mb-5 text-center">Видео с мероприятий</h2>
+            {% if videos %}
+                <div class="row">
+                    <!-- Видеоплеер -->
+                    <div class="col-md-8">
+                        <div class="video-player">
+                            <video id="video-player" controls class="w-100">
+                                <source id="video-source" src="{{ videos.0.video_file.url }}" type="video/mp4">
+                                Ваш браузер не поддерживает видео.
+                            </video>
+                            <h5 id="video-title" class="text-dark mt-3">{{ videos.0.title }}</h5>
+                        </div>
+                    </div>
+                    <!-- Список видео -->
+                    <div class="col-md-4">
+                        <div class="video-list">
+                            <h5 class="text-dark mb-3">Список видео</h5>
+                            <ul class="list-group">
+                                {% for video in videos %}
+                                    <li class="list-group-item video-item {% if forloop.first %}active{% endif %}" data-video-url="{{ video.video_file.url }}" data-video-title="{{ video.title }}">
+                                        {{ forloop.counter }}. {{ video.title }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <p class="text-center text-dark">Видео пока не добавлены.</p>
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- Секция "Новости" -->
+    <section class="news-section container-fluid py-5 bg-light animate__animated animate__fadeIn">
+        <div class="container">
+            <h2 class="text-dark mb-5 text-center">Новости</h2>
+            <div class="row">
+                {% for news_item in news %}
+                    <div class="col-md-4 mb-4">
+                        <a href="{% url 'news_detail' news_item.id %}" class="text-decoration-none">
+                            <div class="news-card">
+                                <img src="{{ news_item.image.url }}" alt="{{ news_item.title }}" class="img-fluid rounded">
+                                <h5 class="text-dark mt-3">{{ news_item.title }}</h5>
+                                <p class="text-muted small">{{ news_item.publication_date|date:"d.m.Y" }}</p>
+                            </div>
+                        </a>
+                    </div>
+                {% empty %}
+                    <p class="text-center text-dark">Новостей пока нет.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Секция "Партнеры" -->
+    <section class="partners-section container-fluid py-5 bg-white animate__animated animate__fadeIn">
+        <div class="container text-center">
+            <h2 class="text-dark mb-5">Партнеры</h2>
+            <div class="row">
+                {% for partner in partners %}
+                    <div class="col-md-3 col-6 mb-4">
+                        <img src="{{ partner.logo.url }}" alt="{{ partner.name }}" class="img-fluid partner-logo">
+                    </div>
+                {% empty %}
+                    <p class="text-dark">Партнеры пока не добавлены.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Секция "О нас" -->
+    <section class="about-section container py-5 animate__animated animate__fadeIn">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h2 class="text-dark mb-4">О нас</h2>
+                <p class="text-dark">EventSite — это платформа для поиска и организации мероприятий. Мы помогаем вам находить интересные события, от конференций до воркшопов, и делиться своими идеями с другими.</p>
+                <a href="{% url 'contact' %}" class="btn btn-outline-primary">Узнать больше</a>
+            </div>
+            <div class="col-md-6">
+                <img src="https://via.placeholder.com/500x300" alt="О нас" class="img-fluid rounded shadow">
             </div>
         </div>
     </section>
