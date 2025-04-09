@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+{% block title %}{{ conference.title }}{% endblock %}
+{% block content %}
+    <!-- Основная информация о конференции -->
+    <section class="conference-hero-section container py-5">
+        <div class="text-center">
+            <h1 class="text-dark mb-3">{{ conference.title }}</h1>
+            <p class="text-dark lead">
+                {{ conference.start_date|date:"d" }}-{{ conference.end_date|date:"d" }} {{ conference.end_date|date:"F Y" }}
+            </p>
+            <p class="text-muted">Организаторы: {{ conference.organizers }}</p>
+            <p class="text-muted">Формат: {{ conference.format }}</p>
+        </div>
+    </section>
+
+    <!-- Цель конференции -->
+    <section class="conference-goal-section container py-5 bg-light">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <img src="{{ conference.goal_image.url }}" alt="Цель конференции" class="img-fluid rounded shadow">
+            </div>
+            <div class="col-md-6">
+                <h2 class="text-dark mb-4">Цель конференции</h2>
+                <p class="text-dark">{{ conference.goal_text }}</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Мероприятия конференции -->
+    <section class="conference-events-section container-fluid py-5">
+        <div class="container">
+            <h2 class="text-dark mb-5 text-center">Мероприятия конференции</h2>
+            <div class="row">
+                {% for event in conference_events %}
+                    <div class="col-12 mb-4">
+                        <div class="event-card d-flex flex-column flex-md-row">
+                            <!-- Левая часть -->
+                            <div class="event-left me-md-4 mb-3 mb-md-0">
+                                <div class="event-date mb-3">
+                                    <p class="text-muted small mb-0">Дата и время</p>
+                                    <h3 class="text-primary">{{ event.date|date:"d.m" }}</h3>
+                                    <p class="text-primary mb-0">{{ event.start_time|time:"H:i" }}–{{ event.end_time|time:"H:i" }}</p>
+                                </div>
+                            </div>
+                            <!-- Центральная часть -->
+                            <div class="event-center flex-grow-1 mb-3 mb-md-0">
+                                <h4 class="text-dark mb-1">{{ event.title }}</h4>
+                                <p class="text-dark mb-0">Формат: {{ event.format }}</p>
+                                {% if event.online_link %}
+                                    <a href="{{ event.online_link }}" class="btn btn-primary mt-2" target="_blank">Присоединиться онлайн</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p class="text-center text-dark">Мероприятий пока нет.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- План проведения конференции -->
+    <section class="conference-plan-section container py-5 bg-light">
+        <div class="text-center">
+            <h2 class="text-dark mb-4">План проведения конференции</h2>
+            <div class="text-dark text-start">{{ conference.plan|linebreaks }}</div>
+        </div>
+    </section>
+
+    <!-- Спикеры -->
+    <section class="conference-speakers-section container-fluid py-5">
+        <div class="container">
+            <h2 class="text-dark mb-5 text-center">Спикеры</h2>
+            <div class="row">
+                {% for speaker in conference.speakers.all %}
+                    <div class="col-md-4 mb-4">
+                        <div class="speaker-card text-center">
+                            <img src="{{ speaker.photo.url }}" alt="{{ speaker.name }}" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;">
+                            <h5 class="text-dark">{{ speaker.name }}</h5>
+                            <p class="text-muted">{{ speaker.bio|truncatewords:20 }}</p>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p class="text-center text-dark">Спикеры пока не добавлены.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Партнеры -->
+    <section class="conference-partners-section container-fluid py-5 bg-light">
+        <div class="container text-center">
+            <h2 class="text-dark mb-5">Партнеры</h2>
+            <div class="row">
+                {% for partner in partners %}
+                    <div class="col-md-3 col-6 mb-4">
+                        <img src="{{ partner.logo.url }}" alt="{{ partner.name }}" class="img-fluid partner-logo">
+                    </div>
+                {% empty %}
+                    <p class="text-dark">Партнеры пока не добавлены.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Фототека -->
+    <section class="conference-photos-section container-fluid py-5">
+        <div class="container">
+            <h2 class="text-dark mb-5 text-center">Фототека</h2>
+            <div class="row">
+                {% for photo in conference.photos.all %}
+                    <div class="col-md-4 mb-4">
+                        <img src="{{ photo.image.url }}" alt="Фото конференции" class="img-fluid rounded shadow">
+                    </div>
+                {% empty %}
+                    <p class="text-center text-dark">Фотографий пока нет.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Видеотека -->
+    <section class="conference-videos-section container-fluid py-5 bg-light">
+        <div class="container">
+            <h2 class="text-dark mb-5 text-center">Видеотека</h2>
+            {% if conference.videos.all %}
+                <div class="row">
+                    <!-- Видеоплеер -->
+                    <div class="col-md-8">
+                        <div class="video-player">
+                            <video id="video-player" controls class="w-100">
+                                <source id="video-source" src="{{ conference.videos.all.0.video_file.url }}" type="video/mp4">
+                                Ваш браузер не поддерживает видео.
+                            </video>
+                            <h5 id="video-title" class="text-dark mt-3">{{ conference.videos.all.0.title }}</h5>
+                        </div>
+                    </div>
+                    <!-- Список видео -->
+                    <div class="col-md-4">
+                        <div class="video-list">
+                            <h5 class="text-dark mb-3">Список видео</h5>
+                            <ul class="list-group">
+                                {% for video in conference.videos.all %}
+                                    <li class="list-group-item video-item {% if forloop.first %}active{% endif %}" data-video-url="{{ video.video_file.url }}" data-video-title="{{ video.title }}">
+                                        {{ forloop.counter }}. {{ video.title }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <p class="text-center text-dark">Видео пока не добавлены.</p>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}

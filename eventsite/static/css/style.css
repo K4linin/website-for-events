@@ -38,8 +38,9 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     padding: 25px;
-    margin-bottom: 40px; 
+    margin-bottom: 40px;
 }
+
 .filters-section .form-control {
     border-radius: 8px;
     border: 1px solid #ced4da;
@@ -204,6 +205,11 @@ h1, h2, h3, h4, h5, h6 {
     padding: 80px 0;
 }
 
+.news-list-section {
+    background-color: #f8f9fa;
+    padding: 80px 0;
+}
+
 .news-card {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -255,15 +261,68 @@ h1, h2, h3, h4, h5, h6 {
     transform: scale(1.1);
 }
 
-.about-section {
+/* Стили для страницы конференции */
+.conference-hero-section {
     background-color: #ffffff;
     padding: 80px 0;
 }
 
-.about-section img {
-    max-width: 100%;
+.conference-goal-section {
+    background-color: #f8f9fa;
+    padding: 80px 0;
+}
+
+.conference-goal-section img {
+    max-height: 300px;
+    object-fit: cover;
+    width: 100%;
+}
+
+.conference-events-section {
+    background-color: #ffffff;
+    padding: 80px 0;
+}
+
+.conference-plan-section {
+    background-color: #f8f9fa;
+    padding: 80px 0;
+}
+
+.conference-plan-section .text-start {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.conference-speakers-section {
+    background-color: #ffffff;
+    padding: 80px 0;
+}
+
+.speaker-card img {
+    border-radius: 50%;
+}
+
+.conference-partners-section {
+    background-color: #f8f9fa;
+    padding: 80px 0;
+}
+
+.conference-photos-section {
+    background-color: #ffffff;
+    padding: 80px 0;
+}
+
+.conference-photos-section img {
+    max-height: 200px;
+    object-fit: cover;
+    width: 100%;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.conference-videos-section {
+    background-color: #f8f9fa;
+    padding: 80px 0;
 }
 
 footer {

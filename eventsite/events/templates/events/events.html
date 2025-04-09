@@ -1,27 +1,35 @@
 {% extends 'base.html' %}
-{% block title %}Мероприятия{% endblock %}
+{% block title %}Список мероприятий{% endblock %}
 {% block content %}
-    <section class="container my-5">
-        <h2 class="text-center mb-4">Все мероприятия</h2>
-        <div class="row">
-            {% for event in events %}
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        {% if event.image %}
-                            <img src="{{ event.image.url }}" class="card-img-top" alt="{{ event.title }}">
-                        {% else %}
-                            <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Placeholder">
-                        {% endif %}
-                        <div class="card-body">
-                            <h5 class="card-title">{{ event.title }}</h5>
-                            <p class="card-text"><strong>{{ event.date|date:"d.m.Y H:i" }}</strong></p>
-                            <p class="card-text">{{ event.description|truncatewords:20 }}</p>
+    <!-- Секция со списком мероприятий -->
+    <section class="events-section container-fluid py-5">
+        <div class="container">
+            <h2 class="text-dark mb-5 text-center">Список мероприятий</h2>
+            <div class="row">
+                {% for event in events %}
+                    <div class="col-12 mb-4">
+                        <div class="event-card d-flex flex-column flex-md-row">
+                            <!-- Левая часть -->
+                            <div class="event-left me-md-4 mb-3 mb-md-0">
+                                <div class="event-date mb-3">
+                                    <p class="text-muted small mb-0">Дата и время</p>
+                                    <h3 class="text-primary">{{ event.date|date:"d.m" }}</h3>
+                                    <p class="text-primary mb-0">{{ event.start_time|time:"H:i" }}–{{ event.end_time|time:"H:i" }}</p>
+                                </div>
+                            </div>
+                            <!-- Центральная часть -->
+                            <div class="event-center flex-grow-1 mb-3 mb-md-0">
+                                <h4 class="text-dark mb-1">{{ event.title }}</h4>
+                                <p class="text-dark mb-0">Локация: {{ event.location }}</p>
+                                <p class="text-dark mb-0">Адрес: {{ event.address }}</p>
+                                <p class="text-dark mb-0">Уточнение: {{ event.location_details }}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% empty %}
-                <p class="text-center">Мероприятий пока нет.</p>
-            {% endfor %}
+                {% empty %}
+                    <p class="text-center text-dark">Мероприятий пока нет.</p>
+                {% endfor %}
+            </div>
         </div>
     </section>
 {% endblock %}

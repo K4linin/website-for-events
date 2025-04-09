@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ event.title }}{% endblock %}
+
+{% block content %}
+    <!-- Основная информация -->
+    <section class="hero-section container-fluid py-5">
+        <div class="container">
+            <h1 class="text-dark mb-4">{{ event.title }}</h1>
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>Дата:</strong> {{ event.date|date:"d.m.Y" }}</p>
+                    <p><strong>Время:</strong> {{ event.start_time|time:"H:i" }}–{{ event.end_time|time:"H:i" }}</p>
+                    <p><strong>Локация:</strong> {{ event.location }}</p>
+                    <p><strong>Адрес:</strong> {{ event.address }}</p>
+                    <p>{{ event.description }}</p>
+                    <h3>Цели мероприятия</h3>
+                    <p>{{ event.goals }}</p>
+                    {% if event.additional_info %}
+                        <h3>Дополнительная информация</h3>
+                        <p>{{ event.additional_info }}</p>
+                    {% endif %}
+                </div>
+                <div class="col-md-6">
+                    {% if event.main_image %}
+                        <img src="{{ event.main_image.url }}" class="img-fluid mb-4" alt="{{ event.title }}">
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Секция "Активности мероприятия" -->
+    <section class="activities-section container-fluid py-5">
+        <div class="container">
+            <h2 class="text-dark mb-5 text-center">Активности мероприятия</h2>
+            <div class="row">
+                {% for activity in event.activities.all %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ activity.title }}</h5>
+                                <p class="card-text"><strong>Время:</strong> {{ activity.start_time|time:"H:i" }}–{{ activity.end_time|time:"H:i" }}</p>
+                                <p class="card-text"><strong>Локация:</strong> {{ activity.location }}</p>
+                                <p class="card-text">{{ activity.description|truncatewords:20 }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p class="text-center text-dark">Активностей пока нет.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Секция "Партнёры и фотогалерея" -->
+    <section class="partners-gallery-section container-fluid py-5">
+        <div class="container">
+            <!-- Партнёры -->
+            <h2 class="text-dark mb-5 text-center">Наши партнёры</h2>
+            <div class="row mb-5">
+                {% for partner in partners %}
+                    <div class="col-md-2 mb-3">
+                        <img src="{{ partner.logo.url }}" class="img-fluid" alt="{{ partner.name }}">
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Фотогалерея с горизонтальным скроллингом -->
+            <h2 class="text-dark mb-5 text-center">Фотогалерея</h2>
+            <div class="gallery-container" style="overflow-x: auto; white-space: nowrap; padding-bottom: 15px;">
+                {% for photo in event.photos.all %}
+                    <img src="{{ photo.image.url }}" style="height: 200px; display: inline-block; margin-right: 10px;" alt="Фото мероприятия">
+                {% empty %}
+                    <p class="text-center text-dark">Фотографий пока нет.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Секция "Видео" -->
+    <section class="videos-section container-fluid py-5">
+        <div class="container">
+            <h2 class="text-dark mb-5 text-center">Видео</h2>
+            <div class="row">
+                {% for video in event.videos.all %}
+                    <div class="col-md-4 mb-4">
+                        <h5>{{ video.title }}</h5>
+                        <video controls class="w-100">
+                            <source src="{{ video.video_file.url }}" type="video/mp4">
+                            Ваш браузер не поддерживает видео.
+                        </video>
+                    </div>
+                {% empty %}
+                    <p class="text-center text-dark">Видео пока нет.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Секция "Карта" -->
+    <section class="map-section container-fluid py-5">
+        <div class="container">
+            <h2 class="text-dark mb-5 text-center">Где проходит мероприятие</h2>
+            <div class="map-container">
+                {% if event.latitude and event.longitude %}
+                    <!-- Подключаем Yandex Maps API -->
+                    <script src="https://api-maps.yandex.ru/2.1/?apikey=YOUR_YANDEX_API_KEY&lang=ru_RU" type="text/javascript"></script>
+                    <script type="text/javascript">
+                        ymaps.ready(function () {
+                            var myMap = new ymaps.Map("map", {
+                                center: [{{ event.latitude }}, {{ event.longitude }}],
+                                zoom: 15
+                            });
+
+                            // Добавляем метку на карту
+                            var myPlacemark = new ymaps.Placemark([{{ event.latitude }}, {{ event.longitude }}], {
+                                hintContent: '{{ event.title }}',
+                                balloonContent: '{{ event.address }}'
+                            });
+
+                            myMap.geoObjects.add(myPlacemark);
+                        });
+                    </script>
+                    <div id="map" style="width: 100%; height: 450px;"></div>
+                {% else %}
+                    <p class="text-center text-dark">Не удалось определить координаты для адреса: {{ event.address }}.</p>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
+
 {% block title %}Главная{% endblock %}
+
 {% block content %}
     <!-- Геро-секция -->
     <section class="hero-section text-center text-dark">
@@ -49,7 +51,7 @@
                                 </div>
                                 <!-- Кнопка -->
                                 <div class="event-button">
-                                    <a href="{% url 'events_list' %}" class="btn btn-outline-primary">Подробнее</a>
+                                    <a href="{% url 'event_detail' event.id %}" class="btn btn-outline-primary">Подробнее</a>
                                 </div>
                             </div>
                             <!-- Центральная часть -->
@@ -62,7 +64,6 @@
                                 <p class="text-muted small mb-0">Локация</p>
                                 <h5 class="text-dark mb-3">{{ event.location }}</h5>
                                 <p class="text-muted small mb-0">{{ event.address }}</p>
-                                <p class="text-muted small mb-0">{{ event.location_details }}</p>
                             </div>
                         </div>
                     </div>
@@ -104,7 +105,34 @@
         </div>
     </section>
 
-        <!-- Секция "Новости" -->
+    <!-- Секция "Новые мероприятия" (мини-карточки) -->
+    <section class="recent-events-section container-fluid py-5">
+        <div class="container">
+            <h2 class="text-dark mb-5 text-center">Новые мероприятия</h2>
+            <div class="row">
+                {% for event in recent_events %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            {% if event.main_image %}
+                                <img src="{{ event.main_image.url }}" class="card-img-top" alt="{{ event.title }}" style="height: 150px; object-fit: cover;">
+                            {% else %}
+                                <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Placeholder" style="height: 150px; object-fit: cover;">
+                            {% endif %}
+                            <div class="card-body">
+                                <h5 class="card-title">{{ event.title }}</h5>
+                                <p class="card-text"><strong>Дата:</strong> {{ event.date|date:"d.m.Y" }}</p>
+                                <a href="{% url 'event_detail' event.id %}" class="btn btn-primary">Подробнее</a>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p class="text-center text-dark">Новых мероприятий пока нет.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Секция "Новости" -->
     <section class="news-section container-fluid py-5 bg-light animate__animated animate__fadeIn">
         <div class="container">
             <h2 class="text-dark mb-5 text-center">Новости</h2>
@@ -191,7 +219,7 @@
         </div>
     </section>
 
-        <!-- Секция с видеоплеером -->
+    <!-- Секция с видеоплеером -->
     <section class="video-section container-fluid py-5 bg-white animate__animated animate__fadeIn">
         <div class="container">
             <h2 class="text-dark mb-5 text-center">Видео с мероприятий</h2>
