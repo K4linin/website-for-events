@@ -4,7 +4,8 @@ import requests
 
 class Event(models.Model):
     title = models.CharField(max_length=200, verbose_name="Название мероприятия")
-    date = models.DateField(verbose_name="Дата проведения")
+    date = models.DateField(verbose_name="Дата начала")
+    end_date = models.DateField(verbose_name="Дата окончания", null=True, blank=True, help_text="Оставьте пустым, если мероприятие длится один день")
     start_time = models.TimeField(verbose_name="Время начала", default="09:00")
     end_time = models.TimeField(verbose_name="Время окончания", default="12:00")
     description = models.TextField(verbose_name="Описание")
@@ -15,6 +16,7 @@ class Event(models.Model):
     additional_info = models.TextField(blank=True, verbose_name="Дополнительная информация")
     latitude = models.FloatField(null=True, blank=True, verbose_name="Широта")
     longitude = models.FloatField(null=True, blank=True, verbose_name="Долгота")
+    organizers = models.TextField(verbose_name="Организаторы", help_text="Укажите организаторов через запятую, например: МИРЭА, МГУ", blank=True)
 
     def save(self, *args, **kwargs):
         # Геокодирование адреса с помощью Yandex Geocoder API
@@ -80,7 +82,7 @@ class EventActivity(models.Model):
         verbose_name_plural = "Активности мероприятия"
 
 class Partner(models.Model):
-    name = models.CharField(max_length=100, verbose_name="Название партнера")
+    name = models.CharField(max_length=200, verbose_name="Название партнера")
     logo = models.ImageField(upload_to='partners/', verbose_name="Логотип")
 
     def __str__(self):

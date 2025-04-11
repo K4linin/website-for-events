@@ -3,13 +3,36 @@
 {% block title %}{{ event.title }}{% endblock %}
 
 {% block content %}
-    <!-- Основная информация -->
-    <section class="hero-section container-fluid py-5">
+    <!-- Геро-секция с названием, датами и организаторами -->
+    <section class="hero-section text-center text-light py-5" style="background-color: #1a252f;">
         <div class="container">
-            <h1 class="text-dark mb-4">{{ event.title }}</h1>
+            <h1 class="display-4 text-uppercase mb-3">{{ event.title }}</h1>
+            <p class="lead mb-3">
+                {% if event.end_date and event.end_date != event.date %}
+                    {{ event.date|date:"d" }}-{{ event.end_date|date:"d" }} {{ event.date|date:"F" }} {{ event.date|date:"Y" }} г.
+                {% else %}
+                    {{ event.date|date:"d F Y" }} г.
+                {% endif %}
+            </p>
+            {% if event.organizers %}
+                <p class="text-muted">Организаторы: {{ event.organizers }}</p>
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- Основная информация -->
+    <section class="info-section container-fluid py-5">
+        <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <p><strong>Дата:</strong> {{ event.date|date:"d.m.Y" }}</p>
+                    <h2 class="text-dark mb-4">О мероприятии</h2>
+                    <p><strong>Дата:</strong>
+                        {% if event.end_date and event.end_date != event.date %}
+                            {{ event.date|date:"d.m.Y" }} - {{ event.end_date|date:"d.m.Y" }}
+                        {% else %}
+                            {{ event.date|date:"d.m.Y" }}
+                        {% endif %}
+                    </p>
                     <p><strong>Время:</strong> {{ event.start_time|time:"H:i" }}–{{ event.end_time|time:"H:i" }}</p>
                     <p><strong>Локация:</strong> {{ event.location }}</p>
                     <p><strong>Адрес:</strong> {{ event.address }}</p>
@@ -23,7 +46,7 @@
                 </div>
                 <div class="col-md-6">
                     {% if event.main_image %}
-                        <img src="{{ event.main_image.url }}" class="img-fluid mb-4" alt="{{ event.title }}">
+                        <img src="{{ event.main_image.url }}" class="img-fluid mb-4 rounded" alt="{{ event.title }}">
                     {% endif %}
                 </div>
             </div>
@@ -31,13 +54,13 @@
     </section>
 
     <!-- Секция "Активности мероприятия" -->
-    <section class="activities-section container-fluid py-5">
+    <section class="activities-section container-fluid py-5 bg-light">
         <div class="container">
             <h2 class="text-dark mb-5 text-center">Активности мероприятия</h2>
             <div class="row">
                 {% for activity in event.activities.all %}
                     <div class="col-md-4 mb-4">
-                        <div class="card h-100">
+                        <div class="card h-100 shadow-sm">
                             <div class="card-body">
                                 <h5 class="card-title">{{ activity.title }}</h5>
                                 <p class="card-text"><strong>Время:</strong> {{ activity.start_time|time:"H:i" }}–{{ activity.end_time|time:"H:i" }}</p>
@@ -79,14 +102,14 @@
     </section>
 
     <!-- Секция "Видео" -->
-    <section class="videos-section container-fluid py-5">
+    <section class="videos-section container-fluid py-5 bg-light">
         <div class="container">
             <h2 class="text-dark mb-5 text-center">Видео</h2>
             <div class="row">
                 {% for video in event.videos.all %}
                     <div class="col-md-4 mb-4">
                         <h5>{{ video.title }}</h5>
-                        <video controls class="w-100">
+                        <video controls class="w-100 rounded">
                             <source src="{{ video.video_file.url }}" type="video/mp4">
                             Ваш браузер не поддерживает видео.
                         </video>
@@ -129,4 +152,4 @@
             </div>
         </div>
     </section>
-{% endblock %}
+{% endblock %}python manage.py runserver

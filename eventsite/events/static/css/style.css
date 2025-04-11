@@ -13,6 +13,16 @@ h1, h2, h3, h4, h5, h6 {
     color: #333;
 }
 
+/* Новый стиль для выделения блоков */
+.section-container {
+    background-color: #e9ecef; /* Чуть темнее фона страницы для выделения */
+    border-radius: 15px; /* Скругленные углы */
+    padding: 40px; /* Внутренние отступы */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Легкая тень для глубины */
+    margin: 0 auto; /* Центрирование */
+}
+
+/* Геро-секция */
 .hero-section {
     min-height: 600px;
     background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url('https://via.placeholder.com/1920x600') center/cover no-repeat;
@@ -33,6 +43,7 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 30px;
 }
 
+/* Фильтры */
 .filters-section {
     background-color: #ffffff;
     border-radius: 12px;
@@ -47,6 +58,7 @@ h1, h2, h3, h4, h5, h6 {
     padding: 10px;
 }
 
+/* Секция мероприятий */
 .events-section {
     background-color: #f8f9fa;
     padding: 80px 0;
@@ -117,6 +129,7 @@ h1, h2, h3, h4, h5, h6 {
     color: #ffffff;
 }
 
+/* Текстовая секция мероприятий */
 .events-text-section {
     background-color: #ffffff;
     padding: 60px 0;
@@ -132,6 +145,22 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0 auto;
 }
 
+/* Секция новых мероприятий */
+.recent-events-section {
+    background-color: #f8f9fa;
+    padding: 80px 0;
+}
+
+.recent-events-section .card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.recent-events-section .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* FAQ */
 .faq-section {
     background-color: #ffffff;
     padding: 80px 0;
@@ -162,6 +191,7 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 1.1rem;
 }
 
+/* Видео */
 .video-section {
     background-color: #f8f9fa;
     padding: 80px 0;
@@ -200,6 +230,7 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 500;
 }
 
+/* Новости */
 .news-section {
     background-color: #f8f9fa;
     padding: 80px 0;
@@ -246,6 +277,7 @@ h1, h2, h3, h4, h5, h6 {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+/* Партнеры */
 .partners-section {
     background-color: #f8f9fa;
     padding: 80px 0;
@@ -259,6 +291,12 @@ h1, h2, h3, h4, h5, h6 {
 
 .partner-logo:hover {
     transform: scale(1.1);
+}
+
+/* Контакты */
+.contact-section {
+    background-color: #f8f9fa;
+    padding: 80px 0;
 }
 
 /* Стили для страницы конференции */
@@ -325,6 +363,7 @@ h1, h2, h3, h4, h5, h6 {
     padding: 80px 0;
 }
 
+/* Футер */
 footer {
     background-color: #f8f9fa !important;
     color: #333 !important;
@@ -436,6 +475,10 @@ footer {
     .video-list {
         margin-top: 20px;
         max-height: 300px;
+    }
+
+    .section-container {
+        padding: 20px; /* Уменьшаем отступы для мобильных */
     }
 }
 

@@ -40,13 +40,13 @@ class PartnerAdmin(admin.ModelAdmin):
 # Блок "Мероприятия"
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
-    list_display = ('title', 'date', 'start_time', 'end_time', 'location')
+    list_display = ('title', 'date', 'end_date', 'start_time', 'end_time', 'location')
     list_filter = ('date',)
     search_fields = ('title', 'location')
     inlines = [EventActivityInline, EventPhotoInline, EventVideoInline]
     fieldsets = (
         (None, {
-            'fields': ('title', 'date', 'start_time', 'end_time', 'description', 'goals', 'location', 'address', 'main_image', 'additional_info', 'latitude', 'longitude')
+            'fields': ('title', 'date', 'end_date', 'start_time', 'end_time', 'description', 'goals', 'organizers', 'location', 'address', 'main_image', 'additional_info', 'latitude', 'longitude')
         }),
     )
 
